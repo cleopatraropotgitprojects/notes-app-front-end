@@ -1,22 +1,26 @@
-import React from "react";
-import {cn} from "../../lib/utils";
-
-type ButtonProps = React.ButtonHTMLAttributes<HTMLButtonElement> & {
-    variant?: "primary" | "secondary"
+type ButtonProps = {
+    title: string
+    onClick?: () => void
+    variant?: 'primary' | 'secondary' | 'ghost'
+    type?: 'button' | 'submit'
+    disabled?: boolean
 }
 
-const Button = ({ variant = "primary", className, ...props }: ButtonProps) => {
+export const Button = ({ title, onClick, variant = 'primary', type = 'button', disabled }: ButtonProps) => {
+    const base = 'rounded-xl px-4 py-2 font-medium transition-all'
+    const variants = {
+        primary: 'bg-black text-white hover:bg-gray-900',
+        secondary: 'bg-white border border-gray-300 hover:bg-gray-100',
+        ghost: 'bg-transparent hover:bg-gray-100',
+    }
+
     return (
         <button
-            {...props}
-            className={cn(
-                "px-4 py-2 rounded-md font-medium transition-all",
-                variant === "primary" && "bg-black text-white hover:bg-gray-800",
-                variant === "secondary" && "border border-black text-black hover:bg-gray-100",
-                className
-            )}
-        />
+            className={`${base} ${variants[variant]} ${disabled ? 'opacity-50 cursor-not-allowed' : ''}`}
+            onClick={onClick}
+            type={type}
+            disabled={disabled}>
+            {title}
+        </button>
     )
 }
-
-export default Button
