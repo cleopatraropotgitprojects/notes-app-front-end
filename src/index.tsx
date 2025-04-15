@@ -6,8 +6,12 @@ import App from './App';
 const root = ReactDOM.createRoot(
   document.getElementById('root') as HTMLElement
 );
+
+document.documentElement.classList.add('dark')
+
 root.render(
   <React.StrictMode>
     <App />
   </React.StrictMode>
 );
+
