@@ -1,19 +1,28 @@
-// src/App.tsx
 import React from 'react'
-import {Sidebar} from "./components/organisms/Sidebar";
-import {Header} from "./components/organisms/Header";
-import {NoteDetailsPanel} from "./features/notes/components/NoteDetailsPanel";
+import { Sidebar } from './components/organisms/Sidebar'
+import { Header } from './components/organisms/Header'
+import { NoteDetailsPanel } from './features/notes/components/NoteDetailsPanel'
+import { NoteList } from './features/notes/components/NoteList'
 
 const App = () => {
-  return (
-      <div className="text-center text-xl font-semibold text-yellow-400 mt-10">
-          <Header/>
-          <div className="flex justify-between">
-              <Sidebar/>
-              <NoteDetailsPanel/>
-          </div>
-      </div>
-  )
+    return (
+        <div className="h-screen flex flex-col">
+            {/* Header fix sus */}
+            <Header />
+
+            {/* Conținut */}
+            <div className="flex flex-1 overflow-hidden">
+                {/* Sidebar */}
+                <Sidebar />
+
+                {/* Note list + details */}
+                <main className="flex flex-1 overflow-hidden">
+                    <NoteList />
+                    <NoteDetailsPanel />
+                </main>
+            </div>
+        </div>
+    )
 }
 
 export default App
