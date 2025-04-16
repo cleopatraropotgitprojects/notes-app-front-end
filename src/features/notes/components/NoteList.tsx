@@ -5,6 +5,7 @@ import {useNotesStore} from "../../../store/notesStore";
 
 export const NoteList = () => {
     const { data: notes = [], isLoading } = useNotes()
+    console.log(notes)
     const selectedNote = useNotesStore((s) => s.selectedNote)
     const setSelectedNote = useNotesStore((s) => s.setSelectedNote)
 
