@@ -3,7 +3,7 @@ import {Note} from "../features/notes/hooks/useNotes";
 
 type NoteStore = {
     selectedNote: Note | null
-    setSelectedNote: (note: Note) => void
+    setSelectedNote: (note: Note | null) => void
     updateNoteLive: (fields: Partial<Note>) => void
 }
 

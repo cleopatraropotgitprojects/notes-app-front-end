@@ -1,4 +1,5 @@
 import { MoreHorizontal } from 'lucide-react'
+import {useState} from "react";
 
 type NoteCardProps = {
     title: string
@@ -9,6 +10,7 @@ type NoteCardProps = {
     active?: boolean
     users?: number
     onClick?: () => void
+    onDelete?: () => void
 }
 
 export const NoteCard = ({
@@ -19,7 +21,10 @@ export const NoteCard = ({
                              active,
                              tags,
                              onClick,
+                             onDelete
                          }: NoteCardProps) => {
+    const [menuOpen, setMenuOpen] = useState(false)
+
     return (
         <div
             onClick={onClick}
@@ -27,8 +32,15 @@ export const NoteCard = ({
                 active ? 'bg-yellow-300 text-black' : 'bg-white hover:shadow-md'
             }`}
         >
-            {/* Dots */}
-            <MoreHorizontal className="absolute top-3 right-3 text-gray-400" size={14} />
+            <div onClick={() => setMenuOpen(!menuOpen)}>
+                <MoreHorizontal className="absolute top-3 right-3 text-gray-400 cursor-pointer" size={14} />
+            </div>
+
+            {menuOpen && (
+                <div className="absolute right-3 top-8 bg-white border shadow rounded text-xs z-10 w-24">
+                    <div onClick={onDelete} className="px-3 py-2 text-red-500 hover:bg-red-50 cursor-pointer">Delete</div>
+                </div>
+            )}
 
             {/* Title */}
             <h3 className="font-semibold text-sm mb-1">{title}</h3>

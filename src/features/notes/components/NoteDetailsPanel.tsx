@@ -50,7 +50,13 @@ export const NoteDetailsPanel = () => {
         return () => document.removeEventListener('keydown', handleSaveShortcut, true)
     }, [selectedNote, updateNote])
 
-    if (!selectedNote) return <div className="flex-1 bg-white" />
+    if (!selectedNote) {
+        return (
+            <div className="flex-1 h-full bg-white px-10 py-8 flex items-center justify-center text-gray-400">
+                <p className="text-sm">📝 Select a note to view or create a new one</p>
+            </div>
+        )
+    }
 
     const handleChange = (field: 'title' | 'description', value: string) => {
         updateNoteLive({ [field]: value })
