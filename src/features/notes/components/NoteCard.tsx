@@ -1,3 +1,5 @@
+import { AnimatePresence, motion } from 'framer-motion'
+
 type NoteCardProps = {
   title: string
   description: string
@@ -35,15 +37,25 @@ export const NoteCard = ({
       {/* Tags */}
       {tags && tags.length > 0 && (
         <div className="mt-2 flex flex-wrap gap-1 text-[10px] text-gray-700">
-          {tags.map((tag, idx) => (
-            <span key={idx}>#{tag}</span>
-          ))}
+          <AnimatePresence>
+            {tags.map((tag, idx) => (
+              <motion.span
+                key={tag + idx}
+                initial={{ opacity: 0, scale: 0.9 }}
+                animate={{ opacity: 1, scale: 1 }}
+                exit={{ opacity: 0, scale: 0.8 }}
+                transition={{ duration: 0.15 }}
+              >
+                #{tag}
+              </motion.span>
+            ))}
+          </AnimatePresence>
         </div>
       )}
 
       {/* Footer */}
       <div className="mt-3 flex justify-between items-center text-[11px] text-gray-400">
-        <span>{time}</span>
+        <span>Created: {time}</span>
         {location && <span className="text-yellow-600">{location}</span>}
       </div>
     </div>
