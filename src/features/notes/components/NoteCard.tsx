@@ -1,4 +1,4 @@
-import { MoreHorizontal, Pin } from 'lucide-react'
+import { Pin } from 'lucide-react'
 
 type NoteCardProps = {
   title: string
@@ -21,7 +21,6 @@ export const NoteCard = ({
   tags,
   pinned,
   onClick,
-  onDelete,
 }: NoteCardProps) => {
   return (
     <div

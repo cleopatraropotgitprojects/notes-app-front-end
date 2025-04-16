@@ -1,13 +1,13 @@
 import { Search, Download, Pin, MoreHorizontal, Trash } from 'lucide-react'
-import { useDeleteNote } from '../../features/notes/hooks/useDeleteNote'
 import { useNotesStore } from '../../store/notesStore'
 import { useUpdateNote } from '../../features/notes/hooks/useUpdateNotes'
+import { useTrashNote } from '../../features/notes/hooks/useTrashNote'
 
 export const Header = () => {
   const selectedNote = useNotesStore((s) => s.selectedNote)
   const setSelectedNote = useNotesStore((s) => s.setSelectedNote)
   const updateNoteLive = useNotesStore((s) => s.updateNoteLive)
-  const { mutate: deleteNote } = useDeleteNote()
+  const { mutate: deleteNote } = useTrashNote()
   const { mutate: updateNote } = useUpdateNote()
 
   const handleDelete = () => {

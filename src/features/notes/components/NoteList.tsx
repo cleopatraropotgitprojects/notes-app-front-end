@@ -2,14 +2,14 @@ import { NoteCard } from './NoteCard'
 import { useNotes } from '../hooks/useNotes'
 import { formatTimeAgo } from '../../../lib/formatTimeAgo'
 import { useNotesStore } from '../../../store/notesStore'
-import { useDeleteNote } from '../hooks/useDeleteNote'
 import { AnimatePresence, motion } from 'framer-motion'
+import { useTrashNote } from '../hooks/useTrashNote'
 
 export const NoteList = () => {
   const { data: notes = [], isLoading } = useNotes()
   const selectedNote = useNotesStore((s) => s.selectedNote)
   const setSelectedNote = useNotesStore((s) => s.setSelectedNote)
-  const { mutate: deleteNote } = useDeleteNote()
+  const { mutate: trashNote } = useTrashNote()
 
   return (
     <div className="w-[420px] h-full overflow-auto px-8 py-6 space-y-4 bg-white">
@@ -50,7 +50,7 @@ export const NoteList = () => {
                   }
                 }}
                 onDelete={() => {
-                  deleteNote(note.id)
+                  trashNote(note.id)
                   if (selectedNote?.id === note.id) {
                     setSelectedNote(null)
                   }
