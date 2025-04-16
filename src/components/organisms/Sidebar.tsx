@@ -73,6 +73,11 @@ export const Sidebar = () => {
                   'flex items-center justify-between cursor-pointer group',
                   active ? 'text-black font-medium' : 'text-gray-400 hover:text-black'
                 )}
+                onClick={() => {
+                  if (label === 'Tasks') {
+                    navigate('/tasks')
+                  }
+                }}
               >
                 <div className="flex items-center gap-3 text-sm">
                   <Icon size={18} />
