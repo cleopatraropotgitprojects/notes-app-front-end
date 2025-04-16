@@ -8,7 +8,6 @@ export type Note = {
   createdAt: string
   location?: string
   pinned?: boolean
-  sharedWithUsersCount?: number
 }
 
 export const useNotes = () => {

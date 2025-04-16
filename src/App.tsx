@@ -2,14 +2,12 @@ import React from 'react'
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom'
 import { Sidebar } from './components/organisms/Sidebar'
 import { Header } from './components/organisms/Header'
-import {
-  DynamicNoteDetailsPanel,
-  NoteDetailsPanel,
-} from './features/notes/components/panels/NoteDetailsPanel'
-import { NoteList } from './features/notes/components/NoteList'
+import { DynamicNoteDetailsPanel } from './features/notes/components/panels/NoteDetailsPanel'
+import { NoteListPage } from './features/notes/components/NoteList'
 import { AnimatePresence, motion } from 'framer-motion'
 import { useNotesStore } from './store/notesStore'
 import { TemplatesPage } from './features/templates'
+import { ImportPage } from './pages/ImportPage'
 
 const MainLayout = () => {
   const selectedNote = useNotesStore((s) => s.selectedNote)
@@ -25,7 +23,7 @@ const MainLayout = () => {
               path="/"
               element={
                 <>
-                  <NoteList />
+                  <NoteListPage />
                   <AnimatePresence mode="wait">
                     {selectedNote && (
                       <motion.div
@@ -44,6 +42,7 @@ const MainLayout = () => {
               }
             />
             <Route path="/templates" element={<TemplatesPage />} />
+            <Route path="/import" element={<ImportPage />} />
           </Routes>
         </main>
       </div>

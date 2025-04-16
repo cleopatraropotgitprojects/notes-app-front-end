@@ -11,7 +11,7 @@ const getTemplateType = (tags: string[] = []) => {
   return 'simple'
 }
 
-export const NoteList = () => {
+export const NoteListPage = () => {
   const { data: notes = [], isLoading } = useNotes()
   const selectedNote = useNotesStore((s) => s.selectedNote)
   const setSelectedNote = useNotesStore((s) => s.setSelectedNote)

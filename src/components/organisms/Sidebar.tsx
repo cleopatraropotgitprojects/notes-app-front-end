@@ -53,6 +53,8 @@ export const Sidebar = () => {
                   setShowTrash(true)
                 } else if (label === 'Templates') {
                   navigate('/templates')
+                } else if (label === 'Import') {
+                  navigate('/import')
                 }
               }}
             >
