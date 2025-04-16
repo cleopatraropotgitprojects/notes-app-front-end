@@ -8,7 +8,7 @@ import { AnimatePresence, motion } from 'framer-motion'
 import { useNotesStore } from './store/notesStore'
 import { TemplatesPage } from './features/templates'
 import { ImportPage } from './pages/ImportPage'
-import { TasksPage } from './pages/TasksPage'
+import { DashboardPage } from './pages/DashboardPage'
 
 const MainLayout = () => {
   const selectedNote = useNotesStore((s) => s.selectedNote)
@@ -44,7 +44,7 @@ const MainLayout = () => {
             />
             <Route path="/templates" element={<TemplatesPage />} />
             <Route path="/import" element={<ImportPage />} />
-            <Route path="/tasks" element={<TasksPage />} />
+            <Route path="/dashboard" element={<DashboardPage />} />
           </Routes>
         </main>
       </div>

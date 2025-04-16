@@ -23,8 +23,6 @@ const navTop = [
 
 const workspace = [
   { label: 'Notes', icon: FileText, active: true },
-  { label: 'Tasks', icon: LayoutDashboard, active: false },
-  { label: 'Announcements', icon: Volume2, active: false },
   { label: 'Dashboard', icon: LayoutDashboard, active: false },
   { label: 'Development', icon: Code, active: false },
 ]
@@ -74,8 +72,8 @@ export const Sidebar = () => {
                   active ? 'text-black font-medium' : 'text-gray-400 hover:text-black'
                 )}
                 onClick={() => {
-                  if (label === 'Tasks') {
-                    navigate('/tasks')
+                  if (label === 'Dashboard') {
+                    navigate('/dashboard')
                   }
                 }}
               >
