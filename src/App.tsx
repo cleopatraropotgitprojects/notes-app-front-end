@@ -5,24 +5,18 @@ import { NoteDetailsPanel } from './features/notes/components/NoteDetailsPanel'
 import { NoteList } from './features/notes/components/NoteList'
 
 const App = () => {
-    return (
-        <div className="h-screen flex flex-col">
-            {/* Header fix sus */}
-            <Header />
-
-            {/* Conținut */}
-            <div className="flex flex-1 overflow-hidden">
-                {/* Sidebar */}
-                <Sidebar />
-
-                {/* Note list + details */}
-                <main className="flex flex-1 overflow-hidden">
-                    <NoteList />
-                    <NoteDetailsPanel />
-                </main>
-            </div>
-        </div>
-    )
+  return (
+    <div className="h-screen flex flex-col">
+      <Header />
+      <div className="flex flex-1 overflow-hidden">
+        <Sidebar />
+        <main className="flex flex-1 overflow-hidden">
+          <NoteList />
+          <NoteDetailsPanel />
+        </main>
+      </div>
+    </div>
+  )
 }
 
 export default App
