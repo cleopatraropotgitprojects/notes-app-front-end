@@ -40,6 +40,7 @@ export const NoteList = () => {
                 tags={note.tags}
                 time={formatTimeAgo(note.createdAt)}
                 location={note.location}
+                pinned={note.pinned}
                 active={selectedNote?.id === note.id}
                 onClick={() => {
                   if (selectedNote?.id === note.id) {
