@@ -12,19 +12,17 @@ import {
 import { DashboardCart } from '../components/atoms/DashboardCart'
 
 export const DashboardPage = () => {
-  const [timeData, setTimeData] = useState([]) // Datele pentru graficul de timp activ
+  const [timeData, setTimeData] = useState([])
   const [totalNotes, setTotalNotes] = useState(0)
   const [pinnedNotes, setPinnedNotes] = useState(0)
   const [deletedNotes, setDeletedNotes] = useState(0)
 
-  // Obținem datele de la backend
   useEffect(() => {
     const fetchData = async () => {
       try {
         const response = await fetch('https://notes-app-backend-gkkz.onrender.com/api/dashboard')
         const data = await response.json()
 
-        // Setăm datele pentru frontend
         setTotalNotes(data.totalNotes)
         setPinnedNotes(data.pinnedNotes)
         setDeletedNotes(data.deletedNotes)
@@ -34,12 +32,11 @@ export const DashboardPage = () => {
     }
 
     fetchData()
-  }, []) // Doar la montarea componentei
+  }, [])
 
   return (
     <div className="flex h-screen w-full justify-center items-center bg-gray-100 p-6">
       <div className="w-full max-w-6xl bg-white shadow-lg rounded-lg p-6">
-        {/* Cards */}
         <div className="grid grid-cols-1 sm:grid-cols-3 lg:grid-cols-3 gap-8 mb-8">
           <DashboardCart
             title="Total Notes"
@@ -61,14 +58,11 @@ export const DashboardPage = () => {
           />
         </div>
 
-        {/* Graficul Timing & Progress */}
         <div className="relative">
-          {/* Overlay transparent */}
           <div className="absolute inset-0 bg-white opacity-75 z-10 flex justify-center items-center">
             <span className="text-3xl font-bold text-gray-500">Not available currently</span>
           </div>
 
-          {/* Graficul */}
           <h3 className="text-xl font-semibold text-gray-800 mb-4">Active time</h3>
           <ResponsiveContainer width="100%" height={300}>
             <LineChart data={timeData}>

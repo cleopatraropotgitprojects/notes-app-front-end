@@ -1,13 +1,4 @@
-import {
-  FileText,
-  Download,
-  Trash2,
-  LayoutDashboard,
-  Volume2,
-  Code,
-  Plus,
-  MoreVertical,
-} from 'lucide-react'
+import { FileText, Download, Trash2, LayoutDashboard, Code, Plus } from 'lucide-react'
 import { cn } from '../../lib/utils'
 import { useCreateNote } from '../../features/notes/hooks/useCreateNote'
 import { useNotesStore } from '../../store/notesStore'
@@ -22,8 +13,8 @@ const navTop = [
 ]
 
 const workspace = [
-  { label: 'Notes', icon: FileText, active: true },
   { label: 'Dashboard', icon: LayoutDashboard, active: false },
+  { label: 'Notes', icon: FileText, active: false },
   { label: 'Development', icon: Code, active: false },
 ]
 
@@ -36,6 +27,7 @@ export const Sidebar = () => {
   const handleAddNote = async () => {
     const newNote = await createNote({})
     setSelectedNote(newNote)
+    navigate('/notes')
   }
 
   return (
@@ -74,6 +66,10 @@ export const Sidebar = () => {
                 onClick={() => {
                   if (label === 'Dashboard') {
                     navigate('/dashboard')
+                  } else if (label === 'Development') {
+                    navigate('/development')
+                  } else if (label === 'Notes') {
+                    navigate('/notes')
                   }
                 }}
               >
@@ -81,14 +77,11 @@ export const Sidebar = () => {
                   <Icon size={18} />
                   {label}
                 </div>
-                {label === 'Notes' && (
-                  <MoreVertical size={14} className="text-gray-400 group-hover:text-black" />
-                )}
               </div>
             ))}
             <button
               onClick={handleAddNote}
-              className="text-sm text-black flex items-center gap-2 hover:opacity-80"
+              className="text-sm text-yellow-500 flex items-center gap-2 hover:opacity-80"
             >
               <Plus size={18} />
               New Page

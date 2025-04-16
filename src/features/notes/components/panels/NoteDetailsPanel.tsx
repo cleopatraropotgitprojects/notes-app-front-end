@@ -36,7 +36,6 @@ export const NoteDetailsPanel = () => {
   const { selectedNote, updateNoteLive } = useNotesStore()
   const { mutate: updateNote } = useUpdateNote()
 
-  // Load from localStorage on mount
   useEffect(() => {
     const saved = localStorage.getItem(LOCATION_KEY)
     if (saved) {
@@ -51,7 +50,6 @@ export const NoteDetailsPanel = () => {
     }
   }, [])
 
-  // Keep locationQuery in sync with selected note
   useEffect(() => {
     setLocationQuery(selectedNote?.location || '')
   }, [selectedNote?.location])
@@ -98,11 +96,7 @@ export const NoteDetailsPanel = () => {
   }, [selectedNote, updateNote])
 
   if (!selectedNote) {
-    return (
-      <div className="flex-1 h-full bg-white px-10 py-8 flex items-center justify-center text-gray-400">
-        <p className="text-sm">📝 Select a note to view or create a new one</p>
-      </div>
-    )
+    return <div></div>
   }
 
   const handleChange = (field: 'title' | 'description' | 'location', value: string) => {
@@ -128,12 +122,10 @@ export const NoteDetailsPanel = () => {
 
   return (
     <div className="flex-1 h-full bg-white px-10 py-8 overflow-auto border-l">
-      {/* Saving Status */}
       <div className="text-sm text-gray-400 mb-2 h-5 transition-opacity duration-300">
         {isSaving ? 'Saving...' : justSaved ? 'Saved ✓' : ''}
       </div>
 
-      {/* Title */}
       <input
         value={selectedNote.title}
         onChange={(e) => handleChange('title', e.target.value)}
@@ -141,7 +133,6 @@ export const NoteDetailsPanel = () => {
         className="text-2xl font-bold mb-2 w-full outline-none"
       />
 
-      {/* Description */}
       <textarea
         value={selectedNote.description}
         onChange={(e) => handleChange('description', e.target.value)}
@@ -149,7 +140,6 @@ export const NoteDetailsPanel = () => {
         className="w-full text-gray-600 text-sm mb-6 leading-relaxed resize-none h-40 outline-none"
       />
 
-      {/* Tags */}
       <div className="mt-4">
         <h4 className="text-sm font-medium text-gray-500 mb-1">Tags</h4>
         <div className="flex flex-wrap gap-2">
@@ -177,7 +167,6 @@ export const NoteDetailsPanel = () => {
             ))}
           </AnimatePresence>
 
-          {/* Add tag input */}
           <input
             type="text"
             placeholder="Add tag"
@@ -196,7 +185,6 @@ export const NoteDetailsPanel = () => {
         </div>
       </div>
 
-      {/* Location with autocomplete */}
       <div className="mt-6">
         <h4 className="text-sm font-medium text-gray-500 mb-1">Location</h4>
         <Combobox value={selectedNote.location || ''} onChange={handleLocationSelect}>

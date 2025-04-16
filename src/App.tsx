@@ -9,6 +9,7 @@ import { useNotesStore } from './store/notesStore'
 import { TemplatesPage } from './features/templates'
 import { ImportPage } from './pages/ImportPage'
 import { DashboardPage } from './pages/DashboardPage'
+import { DevelopmentPage } from './pages/DevelopmentPage'
 
 const MainLayout = () => {
   const selectedNote = useNotesStore((s) => s.selectedNote)
@@ -21,7 +22,7 @@ const MainLayout = () => {
         <main className="flex flex-1 overflow-hidden">
           <Routes>
             <Route
-              path="/"
+              path="/notes"
               element={
                 <>
                   <NoteListPage />
@@ -33,7 +34,7 @@ const MainLayout = () => {
                         animate={{ x: 0, opacity: 1 }}
                         exit={{ x: 50, opacity: 0 }}
                         transition={{ duration: 0.25 }}
-                        className="flex-1 h-full bg-white px-10 py-8 overflow-auto border-l"
+                        className="flex-1 h-full bg-white px-10 py-8 overflow-auto"
                       >
                         <DynamicNoteDetailsPanel />
                       </motion.div>
@@ -45,6 +46,7 @@ const MainLayout = () => {
             <Route path="/templates" element={<TemplatesPage />} />
             <Route path="/import" element={<ImportPage />} />
             <Route path="/dashboard" element={<DashboardPage />} />
+            <Route path="/development" element={<DevelopmentPage />} />
           </Routes>
         </main>
       </div>

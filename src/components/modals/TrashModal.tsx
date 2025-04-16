@@ -1,4 +1,4 @@
-import { useEffect } from 'react'
+import { useEffect, useState } from 'react'
 import { motion } from 'framer-motion'
 import { X } from 'lucide-react'
 import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query'
@@ -16,8 +16,8 @@ type Note = {
 
 export const TrashModal = ({ onClose }: TrashModalProps) => {
   const queryClient = useQueryClient()
+  const [isDeleting, setIsDeleting] = useState(false)
 
-  // 🔁 Fetch trashed notes
   const { data: trashedNotes = [], isLoading } = useQuery<Note[]>({
     queryKey: ['trashed-notes'],
     queryFn: async () => {
@@ -27,9 +27,6 @@ export const TrashModal = ({ onClose }: TrashModalProps) => {
     },
   })
 
-  console.log('TRASHEDNOTES', trashedNotes)
-
-  // ♻️ Restore note
   const restoreMutation = useMutation({
     mutationFn: async (id: string) => {
       const res = await fetch(`https://notes-app-backend-gkkz.onrender.com/api/notes/${id}`, {
@@ -45,7 +42,6 @@ export const TrashModal = ({ onClose }: TrashModalProps) => {
     },
   })
 
-  // ❌ Permanent delete
   const deleteMutation = useMutation({
     mutationFn: async (id: string) => {
       const res = await fetch(`https://notes-app-backend-gkkz.onrender.com/api/notes/${id}`, {
@@ -57,6 +53,14 @@ export const TrashModal = ({ onClose }: TrashModalProps) => {
       queryClient.invalidateQueries({ queryKey: ['trashed-notes'] })
     },
   })
+
+  const deleteAllNotes = async () => {
+    setIsDeleting(true)
+    for (const note of trashedNotes) {
+      await deleteMutation.mutateAsync(note.id)
+    }
+    setIsDeleting(false)
+  }
 
   useEffect(() => {
     const handleEsc = (e: KeyboardEvent) => {
@@ -74,15 +78,12 @@ export const TrashModal = ({ onClose }: TrashModalProps) => {
         exit={{ scale: 0.9, opacity: 0 }}
         className="bg-white w-full max-w-xl rounded-lg shadow-lg p-6 relative"
       >
-        {/* Close Button */}
         <button onClick={onClose} className="absolute top-4 right-4 text-gray-400 hover:text-black">
           <X size={20} />
         </button>
 
-        {/* Title */}
         <h2 className="text-xl font-semibold mb-4">🗑 Trashed Notes</h2>
 
-        {/* Content */}
         {isLoading ? (
           <p className="text-sm text-gray-500">Loading...</p>
         ) : trashedNotes.length === 0 ? (
@@ -117,6 +118,21 @@ export const TrashModal = ({ onClose }: TrashModalProps) => {
               </li>
             ))}
           </ul>
+        )}
+
+        {trashedNotes.length > 0 && (
+          <button
+            onClick={deleteAllNotes} // Apelăm funcția care șterge toate notele
+            className="mt-4 w-full bg-red-600 text-white py-2 rounded-lg text-sm hover:bg-red-700"
+          >
+            {isDeleting ? 'Deleting...' : 'Delete All Notes Permanently'}
+          </button>
+        )}
+
+        {isDeleting && (
+          <div className="absolute inset-0 bg-black/50 flex justify-center items-center z-20">
+            <span className="text-white text-2xl font-bold">Deleting...</span>
+          </div>
         )}
       </motion.div>
     </div>

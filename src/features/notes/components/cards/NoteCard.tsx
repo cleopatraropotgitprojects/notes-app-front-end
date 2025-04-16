@@ -29,16 +29,13 @@ export const NoteCard = ({
         active ? 'bg-yellow-300 text-black' : 'bg-white hover:shadow-md'
       }`}
     >
-      {/* Title + Pinned */}
       <div className="flex justify-between items-center mb-1">
         <h3 className="font-semibold text-sm">{title}</h3>
         {pinned && <Pin size={14} className="text-black" />}
       </div>
 
-      {/* Description */}
       <p className="text-xs text-gray-500 line-clamp-2">{description}</p>
 
-      {/* Tags */}
       {tags && tags.length > 0 && (
         <div className="mt-2 flex flex-wrap gap-1 text-[10px] text-gray-700">
           {tags.map((tag, idx) => (
@@ -47,7 +44,6 @@ export const NoteCard = ({
         </div>
       )}
 
-      {/* Footer */}
       <div className="mt-3 flex justify-between items-center text-[11px] text-gray-400">
         <span>{time}</span>
         {location && <span className="text-yellow-600">{location}</span>}
