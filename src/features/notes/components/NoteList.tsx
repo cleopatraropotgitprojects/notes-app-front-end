@@ -1,15 +1,56 @@
-import { NoteCard } from './NoteCard'
+import { NoteCard } from './cards/NoteCard'
 import { useNotes } from '../hooks/useNotes'
 import { formatTimeAgo } from '../../../lib/formatTimeAgo'
 import { useNotesStore } from '../../../store/notesStore'
 import { AnimatePresence, motion } from 'framer-motion'
 import { useTrashNote } from '../hooks/useTrashNote'
+import { TodoNoteCard } from './cards/TodoNoteCard'
+
+const getTemplateType = (tags: string[] = []) => {
+  if (tags.includes('todo')) return 'todo'
+  return 'simple'
+}
 
 export const NoteList = () => {
   const { data: notes = [], isLoading } = useNotes()
   const selectedNote = useNotesStore((s) => s.selectedNote)
   const setSelectedNote = useNotesStore((s) => s.setSelectedNote)
   const { mutate: trashNote } = useTrashNote()
+
+  const getNoteCardComponent = (note: any) => {
+    const template = getTemplateType(note.tags)
+
+    const commonProps = {
+      key: note.id,
+      title: note.title || 'Untitled',
+      description: note.description || 'No content',
+      tags: note.tags,
+      time: formatTimeAgo(note.createdAt),
+      location: note.location,
+      pinned: note.pinned,
+      active: selectedNote?.id === note.id,
+      onClick: () => {
+        if (selectedNote?.id === note.id) {
+          setSelectedNote(null)
+        } else {
+          setSelectedNote(note)
+        }
+      },
+      onDelete: () => {
+        trashNote(note.id)
+        if (selectedNote?.id === note.id) {
+          setSelectedNote(null)
+        }
+      },
+    }
+
+    switch (template) {
+      case 'todo':
+        return <TodoNoteCard {...commonProps} />
+      default:
+        return <NoteCard {...commonProps} />
+    }
+  }
 
   return (
     <div className="w-[420px] h-full overflow-auto px-8 py-6 space-y-4 bg-white">
@@ -33,29 +74,7 @@ export const NoteList = () => {
               exit={{ opacity: 0, y: -10 }}
               transition={{ duration: 0.2 }}
             >
-              <NoteCard
-                key={note.id}
-                title={note.title || 'Untitled'}
-                description={note.description || 'No content'}
-                tags={note.tags}
-                time={formatTimeAgo(note.createdAt)}
-                location={note.location}
-                pinned={note.pinned}
-                active={selectedNote?.id === note.id}
-                onClick={() => {
-                  if (selectedNote?.id === note.id) {
-                    setSelectedNote(null)
-                  } else {
-                    setSelectedNote(note)
-                  }
-                }}
-                onDelete={() => {
-                  trashNote(note.id)
-                  if (selectedNote?.id === note.id) {
-                    setSelectedNote(null)
-                  }
-                }}
-              />
+              {getNoteCardComponent(note)}
             </motion.div>
           ))}
         </AnimatePresence>

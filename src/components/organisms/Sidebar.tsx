@@ -13,6 +13,7 @@ import { useCreateNote } from '../../features/notes/hooks/useCreateNote'
 import { useNotesStore } from '../../store/notesStore'
 import { useState } from 'react'
 import { TrashModal } from '../modals/TrashModal'
+import { useNavigate } from 'react-router-dom'
 
 const navTop = [
   { label: 'Templates', icon: FileText, active: false },
@@ -32,9 +33,10 @@ export const Sidebar = () => {
   const { mutateAsync: createNote } = useCreateNote()
   const setSelectedNote = useNotesStore((s) => s.setSelectedNote)
   const [showTrash, setShowTrash] = useState(false)
+  const navigate = useNavigate()
 
   const handleAddNote = async () => {
-    const newNote = await createNote()
+    const newNote = await createNote({})
     setSelectedNote(newNote)
   }
 
@@ -49,6 +51,8 @@ export const Sidebar = () => {
               onClick={() => {
                 if (label === 'Trash') {
                   setShowTrash(true)
+                } else if (label === 'Templates') {
+                  navigate('/templates')
                 }
               }}
             >

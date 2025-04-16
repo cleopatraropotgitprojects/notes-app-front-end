@@ -1,11 +1,32 @@
 import { useEffect, useMemo, useState } from 'react'
-import { useNotesStore } from '../../../store/notesStore'
-import { useUpdateNote } from '../hooks/useUpdateNotes'
+import { useNotesStore } from '../../../../store/notesStore'
+import { useUpdateNote } from '../../hooks/useUpdateNotes'
 import debounce from 'lodash.debounce'
 import { motion, AnimatePresence } from 'framer-motion'
 import { Combobox } from '@headlessui/react'
+import { TodoNoteDetails } from './TodoNoteDetails'
 
 const LOCATION_KEY = 'custom_locations'
+
+const getTemplateType = (tags: string[] = []) => {
+  if (tags.includes('todo')) return 'todo'
+  return 'simple'
+}
+
+export const DynamicNoteDetailsPanel = () => {
+  const selectedNote = useNotesStore((s) => s.selectedNote)
+
+  if (!selectedNote) return null
+
+  const type = getTemplateType(selectedNote.tags)
+
+  switch (type) {
+    case 'todo':
+      return <TodoNoteDetails />
+    default:
+      return <NoteDetailsPanel />
+  }
+}
 
 export const NoteDetailsPanel = () => {
   const [locationOptions, setLocationOptions] = useState<string[]>([])
